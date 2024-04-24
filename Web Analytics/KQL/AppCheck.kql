@@ -1,0 +1,6 @@
+AzureDiagnostics
+| project ResourceType, OperationName, originalHost_s, originalRequestUriWithArgs_s, timeStamp_t, listenerName_s, clientIP_s
+| where ResourceType == "APPLICATIONGATEWAYS" and OperationName == "ApplicationGatewayAccess"
+| summarize Count=count() by clientIP_s, listenerName_s
+| where Count > 10000
+| sort by Count desc, listenerName_s
